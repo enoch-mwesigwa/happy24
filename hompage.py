@@ -236,18 +236,17 @@ images_and_poems: List[Dict[str, str]] = [
     {"image": "photos/Image3.JPG", "poem": poem3},
     {"image": "photos/Image4.jpg", "poem": poem4},
     {"image": "photos/image5.JPEG", "poem": poem5},
-    {"image": "photos/Image6.jpg", "poem": poem6},
-    {"image": "photos/Image7.JPG", "poem": poem7},
+    {"image": "photos/Image6.JPG", "poem": poem6},
+    {"image": "photos/Image7.jpg", "poem": poem7},
     {"image": "photos/Image9.jpg", "poem": poem9},
     {"image": "photos/Image10.PNG", "poem": poem10},
     {"image": "photos/Image11.jpg", "poem": poem11},
-    {"image": "photos/Image12.JPG", "poem": poem12},
+    {"image": "photos/Image12.jpg", "poem": poem12},
     {"image": "photos/Image13.jpg", "poem": poem13},
     {"image": "photos/Image14.jpg", "poem": poem14},
     {"image": "photos/image15.jpg", "poem": poem15},
     {"image": "photos/Image16.jpg", "poem": poem16},
 ]
-
 
 def display_image(image_path: str) -> None:
     """
