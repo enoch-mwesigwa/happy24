@@ -235,8 +235,8 @@ Happy 4 months, Mrs. Mwesigwa"""
 images_and_poems: List[Dict[str, str]] = [
     {"image": "photos/Image1.JPG", "poem": poem1},
     {"image": "photos/Image2.JPG", "poem": poem2},
-    {"image": "photos/Image3.jpg", "poem": poem3},
-    {"image": "photos/Image4.JPG", "poem": poem4},
+    {"image": "photos/Image3.JPG", "poem": poem3},
+    {"image": "photos/Image4.jpg", "poem": poem4},
     {"image": "photos/image5.JPEG", "poem": poem5},
     {"image": "photos/Image6.jpg", "poem": poem6},
     {"image": "photos/Image7.JPG", "poem": poem7},
