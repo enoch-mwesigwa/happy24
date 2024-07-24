@@ -309,7 +309,6 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
-    st.session_state.total_images = total  # Save total images count in session state
     st.markdown(
         """
         <style>
@@ -327,6 +326,15 @@ def display_navigation_buttons(current: int, total: int) -> int:
         .nav-button button {
             width: 100%;
         }
+        .nav-buttons .nav-button button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        @media (max-width: 600px) {
+            .nav-buttons {
+                flex-direction: row;
+            }
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -334,7 +342,7 @@ def display_navigation_buttons(current: int, total: int) -> int:
 
     st.markdown('<div class="nav-buttons"><div class="nav-button" id="left-button"></div><div class="nav-button" id="right-button"></div></div>', unsafe_allow_html=True)
 
-    left_col, _, right_col = st.columns([1,3, 1])
+    left_col, right_col = st.columns([1, 1])
     with left_col:
         st.button("←", key="left_button", disabled=(current == 0), on_click=previous_image)
     with right_col:
