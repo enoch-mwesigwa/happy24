@@ -86,9 +86,10 @@ st.markdown(
         background-color: {theme_colors[2]};
         color: {theme_colors[0]};
     }}
-    .stButton button {{
-        background-color: {theme_colors[1]};
-        color: white;
+    .stButton button:disabled {{
+        background-color: {theme_colors[1]} !important;
+        color: white !important;
+        opacity: 0.5;
     }}
     </style>
     """,
@@ -301,35 +302,46 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
-    col1, col2, col3 = st.columns([1, 3, 1])
-    
+    st.markdown(
+        """
+        <style>
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-buttons button {
+            width: 48%;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2 = st.columns(2)
     with col1:
         if st.button("←", disabled=(current == 0)):
             return current - 1 if current > 0 else current
-    
-    with col3:
+    with col2:
         if st.button("→", disabled=(current == total - 1)):
             return current + 1 if current < total - 1 else current
-    
     return current
 
-def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -> None:
+def display_slideshow(images_and_poems: List[Dict[str, str]]) -> None:
     """
-    Display a slideshow of images and poems with a delay between transitions.
+    Display a slideshow of images and poems controlled by navigation buttons.
 
     Args:
     images_and_poems (List[Dict[str, str]]): A list of dictionaries with 'image' and 'poem' keys.
-    delay (int): Delay in seconds between transitions. Default is 10 seconds.
     """
 
     if "index" not in st.session_state:
         st.session_state.index = 0
 
-    st.session_state.index = display_navigation_buttons(st.session_state.index, len(images_and_poems))
-    
-
-    display_image(images_and_poems[st.session_state.index]["image"])
-    display_poem(images_and_poems[st.session_state.index]["poem"])
+    current = st.session_state.index
+    display_image(images_and_poems[current]["image"])
+    display_poem(images_and_poems[current]["poem"])
+    st.session_state.index = display_navigation_buttons(current, len(images_and_poems)) 
     
 
 
