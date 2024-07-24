@@ -18,7 +18,7 @@ st.markdown(
     }
     .pulsing {
         animation: pulse 4s infinite;
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: bold;
         color: white;
         text-align: center;
@@ -28,9 +28,9 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
 # Theme colors
 theme_colors: List[str] = ["#6f676f", "#ca8d90", "#f7c2cf", "#a96177", "#0e5b6a"]
+
 
 def load_audio(file_path: str) -> bytes:
     """
@@ -229,8 +229,6 @@ I love you, cherish and appreciate you<br><br>
 Happy 4 months, Mrs. Mwesigwa"""
 
 
-
-
 # Display series of pictures and poems
 images_and_poems: List[Dict[str, str]] = [
     {"image": "photos/Image1.JPG", "poem": poem1},
@@ -261,7 +259,6 @@ def display_image(image_path: str) -> None:
     st.image(image_path, use_column_width=True, output_format="auto")
 
 
-
 def display_poem(poem: str) -> None:
     """
     Display a poem with styling and hover effect.
@@ -271,12 +268,21 @@ def display_poem(poem: str) -> None:
     """
     st.markdown(
         f"""
-        <div class="poem" style="animation: pulse 5s infinite; text-align: center; font-size: 20px; color: white; font-style: italic; line-height: 1.5; transition: transform 0.2s ease-in-out;">
+        <div class="poem" style="animation: pulse 5s infinite; text-align: center; font-size: 16px; color: white; font-style: italic; line-height: 1.5; transition: transform 0.2s ease-in-out;">
         {poem}
         </div>
         <style>
         .poem:hover {{
-            transform: scale(1.2);
+            transform: scale(1.05);
+        }}
+        @media only screen and (max-width: 600px) {{
+            .poem {{
+                font-size: 14px;
+                line-height: 1.4;
+            }}
+            .pulsing {{
+                font-size: 1.5rem;
+            }}
         }}
         </style>
         """,
@@ -322,8 +328,9 @@ def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -
     display_poem(images_and_poems[current]["poem"])
     st.session_state.index = display_navigation_buttons(current, len(images_and_poems))
 
+
 # Path to your audio file
-audio_file_path: str = "./Pink Sweat$ - Midnight River (feat. 6lack) [Official Audio].mp3"
+audio_file_path: str = "music/midnight.mp3"
 
 # Load and encode the audio file
 audio_bytes: bytes = load_audio(audio_file_path)
