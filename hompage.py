@@ -324,11 +324,12 @@ def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -
     if "index" not in st.session_state:
         st.session_state.index = 0
 
+    st.session_state.index = display_navigation_buttons(current, len(images_and_poems))
     current = st.session_state.index
 
     display_image(images_and_poems[current]["image"])
     display_poem(images_and_poems[current]["poem"])
-    st.session_state.index = display_navigation_buttons(current, len(images_and_poems))
+    
 
 
 # Path to your audio file
