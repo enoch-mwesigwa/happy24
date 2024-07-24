@@ -233,21 +233,21 @@ Happy 4 months, Mrs. Mwesigwa"""
 
 # Display series of pictures and poems
 images_and_poems: List[Dict[str, str]] = [
-    {"image": "./photos/image1.JPG", "poem": poem1},
-    {"image": "./photos/image2.JPG", "poem": poem2},
-    {"image": "./photos/image3.jpg", "poem": poem3},
-    {"image": "./photos/image4.JPG", "poem": poem4},
-    {"image": "./photos/image5.JPEG", "poem": poem5},
-    {"image": "./photos/image6.jpg", "poem": poem6},
-    {"image": "./photos/image7.JPG", "poem": poem7},
-    {"image": "./photos/image9.jpg", "poem": poem9},
-    {"image": "./photos/image10.PNG", "poem": poem10},
-    {"image": "./photos/image11.jpg", "poem": poem11},
-    {"image": "./photos/image12.JPG", "poem": poem12},
-    {"image": "./photos/image13.jpg", "poem": poem13},
-    {"image": "./photos/image14.jpg", "poem": poem14},
-    {"image": "./photos/image15.jpg", "poem": poem15},
-    {"image": "./photos/image16.jpg", "poem": poem16},
+    {"image": "photos/image1.JPG", "poem": poem1},
+    {"image": "photos/image2.JPG", "poem": poem2},
+    {"image": "photos/image3.jpg", "poem": poem3},
+    {"image": "photos/image4.JPG", "poem": poem4},
+    {"image": "photos/image5.JPEG", "poem": poem5},
+    {"image": "photos/image6.jpg", "poem": poem6},
+    {"image": "photos/image7.JPG", "poem": poem7},
+    {"image": "photos/image9.jpg", "poem": poem9},
+    {"image": "photos/image10.PNG", "poem": poem10},
+    {"image": "photos/image11.jpg", "poem": poem11},
+    {"image": "photos/image12.JPG", "poem": poem12},
+    {"image": "photos/image13.jpg", "poem": poem13},
+    {"image": "photos/image14.jpg", "poem": poem14},
+    {"image": "photos/image15.jpg", "poem": poem15},
+    {"image": "photos/image16.jpg", "poem": poem16},
 ]
 
 
