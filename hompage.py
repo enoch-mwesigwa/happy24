@@ -321,14 +321,15 @@ def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -
     images_and_poems (List[Dict[str, str]]): A list of dictionaries with 'image' and 'poem' keys.
     delay (int): Delay in seconds between transitions. Default is 10 seconds.
     """
+
     if "index" not in st.session_state:
         st.session_state.index = 0
 
-    st.session_state.index = display_navigation_buttons(current, len(images_and_poems))
-    current = st.session_state.index
+    st.session_state.index = display_navigation_buttons(st.session_state.index, len(images_and_poems))
+    
 
-    display_image(images_and_poems[current]["image"])
-    display_poem(images_and_poems[current]["poem"])
+    display_image(images_and_poems[st.session_state.index]["image"])
+    display_poem(images_and_poems[st.session_state.index]["poem"])
     
 
 
