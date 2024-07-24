@@ -71,7 +71,7 @@ def audio_html(audio_base64: str) -> str:
     str: HTML string for the hidden audio player.
     """
     return f"""
-    <audio autoplay loop style="display:none;">
+    <audio autoplay loop>
         <source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
@@ -290,6 +290,13 @@ def display_poem(poem: str) -> None:
         unsafe_allow_html=True,
     )
 
+def previous_image():
+    if st.session_state.index > 0:
+        st.session_state.index -= 1
+
+def next_image():
+    if st.session_state.index < st.session_state.total_images - 1:
+        st.session_state.index += 1
 
 def display_navigation_buttons(current: int, total: int) -> int:
     """
@@ -302,6 +309,7 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
+    st.session_state.total_images = total  # Save total images count in session state
     st.markdown(
         """
         <style>
@@ -309,23 +317,30 @@ def display_navigation_buttons(current: int, total: int) -> int:
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
-        .nav-buttons button {
-            width: 48%;
+        .nav-button {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-button button {
+            width: 100%;
         }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("←", disabled=(current == 0)):
-            return current - 1 if current > 0 else current
-    with col2:
-        if st.button("→", disabled=(current == total - 1)):
-            return current + 1 if current < total - 1 else current
-    return current
+    st.markdown('<div class="nav-buttons"><div class="nav-button" id="left-button"></div><div class="nav-button" id="right-button"></div></div>', unsafe_allow_html=True)
+
+    left_col, _, right_col = st.columns([1,3, 1])
+    with left_col:
+        st.button("←", key="left_button", disabled=(current == 0), on_click=previous_image)
+    with right_col:
+        st.button("→", key="right_button", disabled=(current == total - 1), on_click=next_image)
+
+    return st.session_state.index
 
 def display_slideshow(images_and_poems: List[Dict[str, str]]) -> None:
     """
@@ -337,6 +352,7 @@ def display_slideshow(images_and_poems: List[Dict[str, str]]) -> None:
 
     if "index" not in st.session_state:
         st.session_state.index = 0
+        
 
     current = st.session_state.index
     display_image(images_and_poems[current]["image"])
