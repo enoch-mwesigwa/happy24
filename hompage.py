@@ -2,7 +2,9 @@ import streamlit as st
 import streamlit.components.v1 as components
 import base64
 import time
+from PIL import Image, ExifTags, ImageEnhance
 from typing import List, Dict
+import io
 
 # Set the page configuration
 st.set_page_config(page_title="My Streamlit App", page_icon="💕")
@@ -248,16 +250,58 @@ images_and_poems: List[Dict[str, str]] = [
     {"image": "photos/image15.jpg", "poem": poem15},
     {"image": "photos/Image16.jpg", "poem": poem16},
 ]
+def enhance_image(image: Image) -> Image:
+    """
+    Enhance the image by resizing and applying enhancements like sharpening.
 
+    Args:
+    image (Image): The image to enhance.
 
-def display_image(image_path: str) -> None:
+    Returns:
+    Image: The enhanced image.
+    """
+    # Resize the image to double its original size
+    image = image.resize((image.width * 2, image.height * 2), Image.LANCZOS)
+    
+    # Apply sharpening
+    enhancer = ImageEnhance.Sharpness(image)
+    image = enhancer.enhance(2.0)
+    
+    return image
+
+def correct_image_orientation(image_file) -> Image:
+    image = Image.open(image_file)
+    try:
+        for orientation in ExifTags.TAGS.keys():
+            if ExifTags.TAGS[orientation] == 'Orientation':
+                break
+        exif = image._getexif()
+        if exif is not None:
+            orientation = exif.get(orientation)
+            if orientation == 3:
+                image = image.rotate(180, expand=True)
+            elif orientation == 6:
+                image = image.rotate(270, expand=True)
+            elif orientation == 8:
+                image = image.rotate(90, expand=True)
+    except (AttributeError, KeyError, IndexError):
+        # cases: image don't have getexif
+        pass
+
+    # Enhance the image
+    image = enhance_image(image)
+
+    return image
+
+def display_image(image_file: str) -> None:
     """
     Display an image with styling.
 
     Args:
     image_path (str): Path to the image file.
     """
-    st.image(image_path, use_column_width=True, output_format="auto")
+    image_file = correct_image_orientation(image_file)
+    st.image(image_file, use_column_width=True, output_format="auto")
 
 
 def display_poem(poem: str) -> None:
@@ -309,7 +353,7 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
-    st.session_state.total_images = current
+    st.session_state.total_images = total  # Save total images count in session state
     st.markdown(
         """
         <style>
@@ -327,15 +371,6 @@ def display_navigation_buttons(current: int, total: int) -> int:
         .nav-button button {
             width: 100%;
         }
-        .nav-buttons .nav-button button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        @media (max-width: 600px) {
-            .nav-buttons {
-                flex-direction: row;
-            }
-        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -343,7 +378,7 @@ def display_navigation_buttons(current: int, total: int) -> int:
 
     st.markdown('<div class="nav-buttons"><div class="nav-button" id="left-button"></div><div class="nav-button" id="right-button"></div></div>', unsafe_allow_html=True)
 
-    left_col, right_col = st.columns([1, 1])
+    left_col, _,right_col = st.columns([1,3, 1])
     with left_col:
         st.button("←", key="left_button", disabled=(current == 0), on_click=previous_image)
     with right_col:
