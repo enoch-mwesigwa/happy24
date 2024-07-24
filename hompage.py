@@ -185,7 +185,7 @@ The “I know we got this”<br>
 The “Nothing (but spontaneous farting) can stop us”"""
 
 
-poem13: str = """I choose laugher of love<br><br>
+poem13: str = """I choose the laugher of love<br><br>
 Endless, unescapable, unprovoked laughter<br>
 Laughing at:<br> 
 - The many tv shows we start and don’t finish <br>
