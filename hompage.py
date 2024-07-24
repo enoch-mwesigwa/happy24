@@ -258,33 +258,8 @@ def display_image(image_path: str) -> None:
     Args:
     image_path (str): Path to the image file.
     """
-    image = open(image_path, "rb").read()
-    st.markdown(
-        f"""
-        <style>
-        .image-container {{
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }}
-        .image-container img {{
-            border: 1px solid #6f676f;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out;
-            width: auto;
-            height: auto;
-        }}
-        .image-container img:hover {{
-            transform: scale(1.2);
-        }}
-        </style>
-        <div class="image-container">
-            <img src="data:image/jpeg;base64,{base64.b64encode(image).decode()}" alt="Image Failed to load">
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.image(image_path, use_column_width=True, output_format="auto")
+
 
 
 def display_poem(poem: str) -> None:
@@ -346,11 +321,6 @@ def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -
     display_image(images_and_poems[current]["image"])
     display_poem(images_and_poems[current]["poem"])
     st.session_state.index = display_navigation_buttons(current, len(images_and_poems))
-
-    # Add a delay
-   # time.sleep(delay)
-   # st.session_state.index = (st.session_state.index + 1) % len(images_and_poems)
-   # st.experimental_rerun()
 
 # Path to your audio file
 audio_file_path: str = "./Pink Sweat$ - Midnight River (feat. 6lack) [Official Audio].mp3"
