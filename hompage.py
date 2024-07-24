@@ -160,9 +160,9 @@ And the unexpected surprises along the way"""
 poem10: str = """I choose the spontaneity of love<br><br>
 The raging concerts<br>
 The “1st-day-met best friends”<br>
-The sprints in the rain 
-The spills (not my fault) in the parking lots
-The late night food 
+The sprints in the rain<br> 
+The spills (not my fault) in the parking lots<br>
+The late night food<br> 
 The … 👀"""
 
 poem11: str = """I choose the longing of love<br><br>
@@ -248,6 +248,7 @@ images_and_poems: List[Dict[str, str]] = [
     {"image": "photos/Image16.jpg", "poem": poem16},
 ]
 
+
 def display_image(image_path: str) -> None:
     """
     Display an image with styling.
@@ -300,15 +301,17 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
-    col1, col2, col3 = st.columns([1, 5, 1])
+    col1, col2, col3 = st.columns([1, 3, 1])
+    
     with col1:
-        if st.button("←"):
-            return (current - 1) % total
+        if st.button("←", disabled=(current == 0)):
+            return current - 1 if current > 0 else current
+    
     with col3:
-        if st.button("→"):
-            return (current + 1) % total
+        if st.button("→", disabled=(current == total - 1)):
+            return current + 1 if current < total - 1 else current
+    
     return current
-
 
 def display_slideshow(images_and_poems: List[Dict[str, str]], delay: int = 10) -> None:
     """
