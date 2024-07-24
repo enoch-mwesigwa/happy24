@@ -309,6 +309,7 @@ def display_navigation_buttons(current: int, total: int) -> int:
     Returns:
     int: The updated index.
     """
+    st.session_state.total_images = current
     st.markdown(
         """
         <style>
